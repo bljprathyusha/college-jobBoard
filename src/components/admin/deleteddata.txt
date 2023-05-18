@@ -1,0 +1,34 @@
+ <Select sx={{width:350,mb:3}} value={filter} onChange={handleFilter}>
+                            <MenuItem value="" placeholder='filter by'>
+                                <em>Filter By</em>
+                            </MenuItem>
+                            <MenuItem sx={{width:350,mb:3,"& input": {color: 'white'}}} value={'cgpa'}>CGPA</MenuItem>
+                            <MenuItem sx={{width:350,mb:3,"& input": {color: 'white'}}} value={'amcat'}>AMCAT Score</MenuItem>
+                            <MenuItem sx={{width:350,mb:3,"& input": {color: 'white'}}} value={'branch'}>Branch</MenuItem>
+                            <MenuItem sx={{width:350,mb:3,"& input": {color: 'white'}}} value={'training stream'}>Training Stream</MenuItem>
+                        </Select>
+
+
+
+                        // const [jobid,setJobId]=useState("")
+        // const[jobrole,setJobRole]=useState('')
+        // const [company,setCompany]=useState('')
+        // const [jobDescription,setJobDescription]=useState('')
+        // const [salary,setSalary]=useState('')
+        // const [eligibleStudents,setEligibleStudents]=useState([])
+        // const [appliedStudents,setAppliedStudents]=useState([])
+        // const[filter,setFilter]=useState('')
+
+         // const handleFilter=(event)=>{
+    //     //fetch filter students and put them in eligible students and store them
+    //     setFilter(event.target.value)
+    //     //if filter==a condtition then take the input from the user
+    //     // console.log(filter)
+    // }
+
+
+    {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }

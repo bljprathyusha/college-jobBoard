@@ -29,20 +29,7 @@ class PostJob extends Component{
         //  const job=this.state.job;
          console.log(this.state)
         // const {jobid,jobrole,company,description,salary,enddate}=this.state;
-        const formData=new FormData();
-        // formData.append('jobid',this.state.jobid)
-        // formData.append('jobrole',jobrole)
-        // formData.append('company',company)
-        // formData.append('description',description)
-        // formData.append('salary',salary)
-        // formData.append('enddate',enddate);
-        // console.log(formData);
-        axios(
-            {method:"post",
-            url
-            :"http://localhost:8000/api/jobs",
-            data:this.state,
-        hedaers:{"Content-Type":"multipart/form-data"}})
+       axios.post("http://localhost:8000/api/jobs",this.state)
         .then((res)=>{
             // alert("Posted successfully")
             console.log(res);

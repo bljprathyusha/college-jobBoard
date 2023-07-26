@@ -5,34 +5,60 @@ import { useNavigate } from "react-router-dom";
 import { Box, Card, Container, ListItemIcon, MenuItem, MenuList, Pagination, Stack, Typography, useTheme,Avatar,Button } from '@mui/material'
 import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
 import TextField from '@mui/material/TextField';
+import { useHistory}  from 'react-router-dom';
+import axios from "axios";
 
 const Login=()=>{
-    const navigate=useNavigate();
+   const navigate=useNavigate();
+  //  const history=useHistory();
     const [uname,setUName]=useState("")
     const[pwd,setPwd]=useState("")
-    // const [allEntry,setAllEntry]=useState([]);
-   const [sessionData,setsessionData]=useState();
    const[isUserLoggedIn,setIsUserLoggedIn]=useState(false);
    const[isAdminLoggedIn,setIsAdminLoggedIn]=useState(true);
     const submitForm=(e)=>{
         e.preventDefault();
         if(uname && pwd)
         {
-            // const newEntry={uname:uname,pwd:pwd};
-            // setAllEntry([...allEntry,newEntry]);
-            //if placement uname and pwd setIsAdminLoggedIn as true , if student fetch details check it and update setIsUSerLOggedIn as true
+            let data={};
+           if(uname=='admin')
+           {
+                if(pwd=='cvr')
+                     navigate('/admin/ViewPostedJobs',{replace:true})
+                else
+                    alert('invalid credentials')
+           }
+           else
+           {
+                axios.post(`http://localhost:8000/api/login`,{rollnumber:uname,password:pwd})
+                .then((res)=>{
+                    data=res.data;
+                    console.log(data.student);
+                    localStorage.setItem("userData", JSON.stringify(data.student));
+
+                // localStorage.setItem("userData", data.student);
+                    navigate('/user/AppliedJobs');
+                })
+                .catch((err)=>{
+                    console.log(err);
+                    alert("invalid credentials");
+                })
+
+           }
             
-            if(isUserLoggedIn)
-            {
-                navigate('/user/StudentDashboard',{replace:true})
-            }
-            if(isAdminLoggedIn)
-            {
-                navigate('/admin/PlacementsDashboard',{replace:true})
-            }
+            // if(isUserLoggedIn)
+            // {
+                
+            //         const data = uname;
+            //         localStorage.setItem("userData", data);
+            //         navigate('/user/AppliedJobs');
+            // }
+            // if(isAdminLoggedIn)
+            // {
+            //     navigate('/admin/ViewPostedJobs',{replace:true})
+            // }
            
-            setUName("");
-            setPwd("");
+            // setUName("");
+            // setPwd("");
         }
         else
          alert("not filled details");

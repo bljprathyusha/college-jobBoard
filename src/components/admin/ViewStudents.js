@@ -1,56 +1,102 @@
-import React, { useState } from 'react'
+import React, { Component, useState } from 'react'
 import { Typography } from '@mui/material';
-import Box from '@mui/material';
+import {Box} from '@mui/material';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
-
-function ViewStudents() {
-    const [students,setStudents]=useState([]);
-    const navigate=useNavigate();
-    fetch("http://localhost:8000/api/students",{
-                method: 'GET', 
-                headers:{
-                    'Access-Control-Allow-Origin': 'http://localhost:8000'
-                }
-              }).then(res=>res.json())
-            .then(data=>setStudents(data))
-            console.log(setStudents)
-   const handleCreateStudent=()=>
-    {
-            navigate('/admin/CreateStudent');
+import axios from 'axios';
+import { ThermostatOutlined } from '@mui/icons-material';
+import EditStudent from './EditStudent';
+import { Link } from 'react-router-dom';
+class ViewStudents extends Component {
+  constructor()
+  {
+  
+    super();
+    this.state={
+      students:[],
+      showEditStud:false,
+      edistud:{}
+      //editroll:0
     }
-  return (
-    <Typography sx={{color:"white"}}>
-        <Button  variant="contained" sx={{mb:3}} onClick={handleCreateStudent}>+Create Student</Button>
-     <Typography sx={{color:"white"}}>View Students</Typography>
-        <table cellSpacing={10} >
-            <thead>
-            <tr>
-                <th>Roll Number</th>
-                <th>Name</th>
-                <th>Stream</th>
-                <th>Email</th>
-                <th colSpan={2}>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-                {students.map(s=>
-                    <tr>
-                        <td>{s.rollnumber}</td>
-                        <td>{s.name}</td>
-                        <td>{s.stream}</td>
-                        <td>{s.email}</td>
-                        <td><button>Edit</button></td>
-                        <td><button>Delete</button></td>
-                    </tr>)}
-            </tbody>
-            <tfoot>
+  }
+  componentDidMount()
+  {
+    this.fetchStudents();
+  }
+    
 
-            </tfoot>
+    fetchStudents()
+    {
+      axios.get("http://localhost:8000/api/displaystudents/students")
+      .then(res=>{
+        const students=res.data
+       // console.log(students);
+        this.setState({students});
+      })
+      .catch(err=>console.log(err))
+    }
+    
+    handleDelete=(ind)=>{
+      const sroll=this.state.students[ind].rollnumber;
+      axios.delete(`http://localhost:8000/api/studentdelete/${sroll}`) 
+      .then((res)=>{
+        this.fetchStudents()
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+      console.log(sroll);
+    }
 
-</table>
-</Typography>
-  )
+    handleEdit=(ind)=>{
+     // const sroll=this.state.students[ind].rollnumber;
+      this.setState(state=>({
+        showEditStud:!state.showEditStud,
+        edistud:this.state.students[ind]
+        //editroll:sroll
+      }))
+      //()=>(console.log(this.state.editstud))
+    }
+
+    render()
+    {
+      return (
+        <Box sx={{color:"white"}}>
+         <Typography variant='h5' sx={{color:"white",textAlign:'center'}}>View Students</Typography>
+        <Button variant="contained" sx={{mb:3}}> <Link to="/admin/CreateStudent" style={{ textDecoration: 'none', color: 'white' }}>+Add Student</Link></Button>
+       { this.state.showEditStud&& <EditStudent showEdit={this.state.showEditStud} stud={this.state.edistud}/>}
+            <table cellSpacing={10} >
+                <thead>
+                <tr>
+                    <th>Roll Number</th>
+                    <th>UserName</th>
+                    <th>Branch</th>
+                    <th>Stream</th>
+                    <th>CGPA</th>
+                    <th colSpan={2} style={{paddingLeft:'60px'}}>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                    {this.state.students.map((s,ind)=>
+                        <tr key={s.rollnumber}>
+                            <td style={{textAlign:'center',padding:'30px'}}>{s.rollnumber}</td>
+                            <td style={{textAlign:'center',padding:'30px'}}>{s.username}</td>
+                            <td style={{textAlign:'center',padding:'30px'}}>{s.branch}</td>
+                            <td style={{textAlign:'center',padding:'30px'}}>{s.stream}</td>
+                            <td style={{textAlign:'center',padding:'30px'}}>{s.cgpa}</td>
+                            <td style={{paddingLeft:'100px'}} ><Button  variant="contained" sx={{mb:3}} onClick={()=>this.handleEdit(ind)}>Edit</Button></td>
+                            <td ><Button  variant="contained" sx={{mb:3}} onClick={()=>this.handleDelete(ind)}>Delete</Button></td>
+                        </tr>)}
+                </tbody>
+                <tfoot>
+    
+                </tfoot>
+    
+    </table>
+    </Box>
+      )
+    }
+  
 }
 
 export default ViewStudents

@@ -32,6 +32,7 @@ const SidebarAdm = () => {
         // dispatch(userLogoutAction());
       //  window.location.reload(true);
         setTimeout(() => {
+            localStorage.clear();
             navigate('/');
         }, 500)
     }
@@ -44,10 +45,6 @@ const SidebarAdm = () => {
                 <Box sx={{ display: "flex", justifyContent: "space-between", flexDirection: "column", height: "100%" }}>
                     <Box>
                         <Box sx={{ pt: 3, pb: 5, display: "flex", justifyContent: "center" }}>
-
-                            
-                               
-                                    {/* <Avatar alt="logo dashboard" src={Person3Icon} /> */}
 
                         </Box>
 
@@ -81,7 +78,6 @@ const SidebarAdm = () => {
                            
                                {/* userInfo && userInfo.role === 1 ? */}
                                     <>
-                                        <MenuItem component={<Link to="/admin/PlacementsDashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
                                         <MenuItem component={<Link to="/admin/ViewStudents" />} icon={<GroupAddIcon />}> View Students </MenuItem>
                                         <MenuItem component={<Link to="/admin/ViewPostedJobs" />} icon={<WorkIcon />}> View Posted Jobs </MenuItem>
                                         <MenuItem component={<Link to="/admin/PostJob" />} icon={<CategoryIcon />}> Post Job </MenuItem>

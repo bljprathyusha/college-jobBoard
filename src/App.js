@@ -2,16 +2,16 @@ import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter,Routes,Route} from 'react-router-dom';
 import Login from './pages/login_comp';
-import Register from './pages/register';
+
 import Home from './pages/Home';
 import StudentDashboard from './pages/user/StudentDashboard';
 import ViewProfile from './components/studentcomp/viewProfile';
 import AppliedJobs from './components/studentcomp/applyJobs';
-import User from './pages/User';
 import usersdata from "./usersdata";
 import ViewStudents from './components/admin/ViewStudents';
 import ViewPostedJobs from './components/admin/ViewPostedJobs';
 import PostJob from './components/admin/PostJob';
+import EditJob from './components/admin/EditJob';
 import {Link} from 'react-router-dom';
 import { Button ,Typography} from '@mui/material';
 import { useState } from 'react';
@@ -28,6 +28,7 @@ const ViewStudentsLayout=LayoutAdmin(ViewStudents);//Looks like all(All that usi
 const ViewPostedJobsLayout=LayoutAdmin(ViewPostedJobs);
 const PostJobLayout=LayoutAdmin(PostJob)
 const CreateStudentLayout=LayoutAdmin(CreateStudent);
+const EditJobLayout=LayoutAdmin(EditJob);
 //Lauout for Student
 const StudentDashboardLayout=LayoutUser(StudentDashboard)
 const AppliedJobsLayout=LayoutUser(AppliedJobs)
@@ -38,7 +39,6 @@ const ViewProfileLayout=LayoutUser(ViewProfile)
       <Routes>
         <Route path="/" exact element={<Home/>}></Route>
         <Route path="/login" exact element={<Login/>}></Route>
-        <Route path="/user" exact element={<User/>}></Route>
         <Route path="/user/StudentDashboard" element={<StudentDashboardLayout/>}></Route>
         <Route path="/user/ViewProfile" exact element={<ViewProfileLayout/>}></Route>
         <Route path="/user/AppliedJobs" exact element={<AppliedJobsLayout/>}></Route>
@@ -47,6 +47,7 @@ const ViewProfileLayout=LayoutUser(ViewProfile)
         <Route path="/admin/ViewPostedJobs" exact element={<ViewPostedJobsLayout/>}></Route>
         <Route path="/admin/PostJob" exact element={<PostJobLayout/>}></Route>
         <Route path="/admin/CreateStudent" exact element={<CreateStudentLayout/>}></Route>
+        <Route path="/admin/EditJob" exact element={<EditJobLayout/>} />
         {/* <Route path="/" element={<App/>}></Route> */}
       </Routes>
     </BrowserRouter>

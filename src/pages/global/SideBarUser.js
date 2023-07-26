@@ -32,6 +32,7 @@ const SidebarUser = () => {
         // dispatch(userLogoutAction());
       //  window.location.reload(true);
         setTimeout(() => {
+            localStorage.clear();
             navigate('/');
         }, 500)
     }
@@ -88,7 +89,6 @@ const SidebarUser = () => {
                                      </> */}
                                     {/* : */}
                                     <>
-                                         <MenuItem component={<Link to="/user/StudentDashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
                                          <MenuItem component={<Link to="/user/ViewProfile" />} icon={<Person3Icon />}> View Profile </MenuItem>
                                          <MenuItem component={<Link to="/user/AppliedJobs" />} icon={<WorkHistoryIcon />}>Jobs for You </MenuItem>
                                     </>                           

@@ -5,7 +5,7 @@ import AppliedJobs from "../../components/studentcomp/applyJobs";
 const StudentDashboard=()=>{
     return(
     <>
-    
+        <h1>Student Dashboard</h1>
     </>
     )
 }

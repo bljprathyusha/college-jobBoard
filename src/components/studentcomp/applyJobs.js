@@ -1,93 +1,97 @@
-import React, { Component } from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from 'axios';
-class AppliedJobs extends Component{
-    constructor(props)
-    {
-        super(props)
-        this.state={
-                jobs:[],
-                
-        }
-    }
+import { useLocation } from "react-router-dom";
 
-componentDidMount()
-{
-    this.fetchJobs();
-}
-    fetchJobs()
-    {
-        axios.get('http://localhost:8000/api/display/jobs')
-        .then((res)=>{
-            const jobs=res.data.map((job)=>({
-                ...job,
-                disabled:false,
-            }));
-            console.log(jobs);
-            this.setState({jobs});
-        })
-        .catch((err)=>{
-                console.log(err);
-        })
-    }
-    handleApply=(id)=>{
-       // setIsApply(true); and write disabled={isApply} in Button
-        this.setState((prev)=>{
-            const updatedjobs=prev.jobs.map((job)=>{
-                if(job.jobid==id)
-                    return {...job,disabled:true};
-                return job;
-            })
-            return {jobs:updatedjobs};
-        })
-       
-    }
-    // handleReject=(e,i)=>{
+const AppliedJobs = () => {
+  const [jobs, setJobs] = useState([]);
+  const [rollnum, setRollNum] = useState('');  
+  useEffect(() => {
+      let data = localStorage.getItem("userData");
+      console.log(data);
+      if(data){
+          const userData=JSON.parse(data);
+          console.log(userData);
+          setRollNum(userData.rollnumber);     
+      }
+     
+  }, [rollnum]);
+  useEffect(()=>{
+    fetchJobs();
+    //console.log(rollnum);
+  })
 
-    // }
-    render()
-    {
+  const fetchJobs = () => {
+    axios.get('http://localhost:8000/api/displayjobs/jobs')
+      .then((res) => {
+        const jobs = res.data.map((job) => ({
+          ...job,
+          disabled: false,
+        }));
+        setJobs(jobs);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  const handleApply = (jid) => {
+    const id = jid;
+    axios.post(`http://localhost:8000/api/jobs/${id}`, { rollnumber: '' + rollnum })
+      .then((res) => {
+        console.log(res);
+        alert("Job Applied");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
-        return(
-            <>
-            <Typography variant="h4" sx={{color:"white",mb:6}}>Jobs for you</Typography>
-            <Typography sx={{color:"white"}}>
-            <table cellSpacing={10}>
-                <thead>
-                <tr>
-                    <th>Job Id</th>
-                    <th>Job Role</th>
-                    <th>Job Description</th>
-                    <th>Salary</th>
-                    <th>End Date</th>
-                    <th colspan="2">Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-              
+    axios.post(`http://localhost:8000/api/students/${rollnum}`, { jobid: '' + id })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+
+  return (
+    <>
+      <Typography variant="h4" sx={{ color: "white",mt:4, mb: 6 }}>Jobs for you</Typography>
+      <Typography sx={{ color: "white" }} >
+        <table cellSpacing={10}>
+          <thead>
+            <tr>
+              <th style={{color:"#b3e5fc"}}>Job Id</th>
+               <th style={{color:"#b3e5fc"}}>Job Role</th>
+               <th style={{color:"#b3e5fc"}}>Company</th>
+               <th style={{color:"#b3e5fc"}}>Job Description</th>
+               <th style={{color:"#b3e5fc"}}>Salary</th>
+               <th style={{color:"#b3e5fc"}}>End Date</th>
+              <th style={{color:"#b3e5fc"}} colspan="2">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {jobs.map((j, i) => (
+              <tr key={j.jobid}>
+                <td style={{textAlign:'center',maxWidth:'100px'}}>{j.jobid}</td>
+                              <td style={{textAlign:'center',maxWidth:'200px'}}>{j.jobrole}</td>
+                              <td style={{textAlign:'center',padding:'10px'}}>{j.company}</td>
+                              <td style={{textAlign:'left',maxWidth:'400px'}}>{j.description}</td>
+                              <td style={{textAlign:'center',padding:'10px'}}>{j.salary}</td>
+                              <td style={{textAlign:'center',paddingLeft:'30px',paddingRight:'40px'}}>{j.enddate}</td>
+                              <td style={{textAlign:'center',padding:'10px'}}> <Button variant="contained" sx={{ p: "1" }} onClick={() => handleApply(j.jobid)} disabled={j.disabled}>
+                    Apply
+                  </Button></td>
                
-                 
-                        {this.state.jobs.map((j,i)=>
-                        <tr key ={j.jobid}>
-                        <td >{j.jobid}</td>
-                        <td >{j.jobrole}</td>
-                        <td >{j.description}</td>
-                        <td>{j.salary}</td>
-                        <td >{j.enddate}</td>
-                        <td><Button variant="contained" sx={{p:"1"}} onClick={()=>this.handleApply(j.jobid)} disabled={this.state.jobs.disabled}>Apply</Button></td>
-                        {/* <td><Button variant="contained" sx={{p:"1"}}onClick={handleReject(i)}>Reject</Button></td> */}
-                        </tr>)}
-                    
-                </tbody>
-                <tfoot>
-    
-                </tfoot>
-    
-            </table>
-            </Typography>
-            </>
-        )
-    }
+              </tr>
+            ))}
+          </tbody>
+          <tfoot></tfoot>
+        </table>
+      </Typography>
+    </>
+  );
 }
-export default AppliedJobs
+
+export default AppliedJobs;

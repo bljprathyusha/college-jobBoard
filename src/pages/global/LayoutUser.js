@@ -4,7 +4,6 @@ import HeaderTop from './HeaderTop';
 import SidebarUser from './SideBarUser';
 
 const LayoutUser = (Component) => ({...props}) => {
-
     return (
         <>
             <div style={{ display: 'flex', minHeight: "100vh" }}>

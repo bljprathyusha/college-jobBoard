@@ -30,7 +30,7 @@ class CreateStudent extends Component {
       event.preventDefault();
       axios.post("http://localhost:8000/api/students",this.state)
         .then((res)=>{
-            // alert("Posted successfully")
+             alert("Added student successfully")
             console.log(res);
         })
         .catch((err)=>{
@@ -43,7 +43,7 @@ class CreateStudent extends Component {
     <>
     <Box onSubmit={this.submitStudent} component="form" className='form_style border-style'sx={{align:"center",m:'2',display:"flex",flexDirection:"column",alignItems:"center"}}> 
       {/* if component given as form then only submitJob is executing */}
-      <Typography variant='h4' sx={{mt:4,color:"white"}}>Create Student </Typography>
+      <Typography variant='h4' sx={{mt:2,color:"white"}}>Create Student </Typography>
                         <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                             <WorkIcon/>
                         </Avatar>
@@ -54,7 +54,7 @@ class CreateStudent extends Component {
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}}  name="branch" placeholder="Branch" value={branch} onChange={this.handleChange} />
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="stream" placeholder="Stream" value={stream} onChange={this.handleChange} />
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="cgpa" placeholder="CGPA" value={cgpa} onChange={this.handleChange} />
-                        <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="amcat" placeholder="Amcat" value={amcat} onChange={this.handleChange} />
+                        {/* <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="amcat" placeholder="Amcat" value={amcat} onChange={this.handleChange} /> */}
 
                         <Button type="submit"  variant="contained" sx={{mb:3}}>Create Student</Button>
                 

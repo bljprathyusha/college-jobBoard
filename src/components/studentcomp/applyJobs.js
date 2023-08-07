@@ -27,7 +27,6 @@ const AppliedJobs = () => {
       .then((res) => {
         const jobs = res.data.map((job) => ({
           ...job,
-          disabled: false,
         }));
         setJobs(jobs);
       })
@@ -37,7 +36,7 @@ const AppliedJobs = () => {
   }
   const handleApply = (jid) => {
     const id = jid;
-    axios.post(`http://localhost:8000/api/jobs/${id}`, { rollnumber: '' + rollnum })
+    axios.post(`http://localhost:8000/api/jobs/${id}`, { rollnumber: '' + rollnum }) ///added job id to my applied jobs array
       .then((res) => {
         console.log(res);
         alert("Job Applied");
@@ -46,7 +45,7 @@ const AppliedJobs = () => {
         console.log(err);
       });
 
-    axios.post(`http://localhost:8000/api/students/${rollnum}`, { jobid: '' + id })
+    axios.post(`http://localhost:8000/api/students/${rollnum}`, { jobid: '' + id }) ///add me to job's applied student array
       .then((res) => {
         console.log(res);
       })
@@ -80,7 +79,7 @@ const AppliedJobs = () => {
                               <td style={{textAlign:'left',maxWidth:'400px'}}>{j.description}</td>
                               <td style={{textAlign:'center',padding:'10px'}}>{j.salary}</td>
                               <td style={{textAlign:'center',paddingLeft:'30px',paddingRight:'40px'}}>{j.enddate}</td>
-                              <td style={{textAlign:'center',padding:'10px'}}> <Button variant="contained" sx={{ p: "1" }} onClick={() => handleApply(j.jobid)} disabled={j.disabled}>
+                              <td style={{textAlign:'center',padding:'10px'}}> <Button variant="contained" sx={{ p: "1" }} onClick={() => handleApply(j.jobid)} >
                     Apply
                   </Button></td>
                

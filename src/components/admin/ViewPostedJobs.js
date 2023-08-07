@@ -29,9 +29,8 @@ class ViewPostedJobs extends Component {
     {
         axios.get('http://localhost:8000/api/displayjobs/jobs')  ///api/displayjobs/jobs
         .then((res)=>{
-            const jobs=res.data.map((job)=>({
-                ...job,
-                disabled:false,
+            const jobs=res.data.map((j)=>({
+                ...j,
             }));
             console.log(jobs);
             this.setState({jobs});

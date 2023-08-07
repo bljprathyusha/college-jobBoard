@@ -1,6 +1,5 @@
 import React,{useEffect, useState} from "react";
-import StudentDashboard from "./user/StudentDashboard";
-import PlacementsDashboard from "./admin/PlacementsDashboard";
+
 import { useNavigate } from "react-router-dom";
 import { Box, Card, Container, ListItemIcon, MenuItem, MenuList, Pagination, Stack, Typography, useTheme,Avatar,Button } from '@mui/material'
 import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
@@ -10,11 +9,10 @@ import axios from "axios";
 
 const Login=()=>{
    const navigate=useNavigate();
-  //  const history=useHistory();
     const [uname,setUName]=useState("")
     const[pwd,setPwd]=useState("")
-   const[isUserLoggedIn,setIsUserLoggedIn]=useState(false);
-   const[isAdminLoggedIn,setIsAdminLoggedIn]=useState(true);
+//    const[isUserLoggedIn,setIsUserLoggedIn]=useState(false);
+//    const[isAdminLoggedIn,setIsAdminLoggedIn]=useState(true);
     const submitForm=(e)=>{
         e.preventDefault();
         if(uname && pwd)
@@ -58,7 +56,7 @@ const Login=()=>{
             // }
            
             // setUName("");
-            // setPwd("");
+            // setPwd("")
         }
         else
          alert("not filled details");
@@ -68,7 +66,7 @@ const Login=()=>{
         <>
         <Box onSubmit={submitForm} component="form" className='form_style border-style'sx={{height: '81vh',mx:"10",my:"1", display: "flex", alignItems: "center", justifyContent: "center"}} >
          {/* if component given as form then only submitJob is executing */}
-        <Box sx={{align:"center",m:'1',display:"flex",flexDirection:"column",alignItems:"center"}}>
+             <Box sx={{align:"center",m:'1',display:"flex",flexDirection:"column",alignItems:"center"}}>
       
                         <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                             <LockClockOutlined />
@@ -76,11 +74,12 @@ const Login=()=>{
 
                         <TextField  sx={{mb:3}} name="username" placeholder="username" value={uname} onChange={(e)=>{setUName(e.target.value)}} />
                         <TextField sx={{mb:3}}type="password" name="password" placeholder="password" value={pwd} onChange={(e)=>{setPwd(e.target.value)}}/>
+                        {console.log(uname+" "+pwd)}
                         <Button type="submit" variant="contained" sx={{mb:3}}>Login</Button>
                 
                 
             </Box>
-            </Box>
+        </Box>
         </>
     )
 }

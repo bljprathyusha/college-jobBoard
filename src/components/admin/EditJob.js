@@ -37,7 +37,7 @@ class EditJob extends Component{
         axios.put(`http://localhost:8000/api/jobupdate/${jobid}`,this.state)   //api/jobupdate/:jobid
             .then((res)=>{
                 console.log(res)
-                alert('Edited Job')
+                alert('Edited Job')//gives an alert if sccessful
             })
             .catch((err)=>{
                 console.log(err)
@@ -58,7 +58,7 @@ class EditJob extends Component{
           
           <Box onSubmit={this.submitJob} component="form" className='form_style border-style'sx={{align:"center",m:'2',display:"flex",flexDirection:"column",alignItems:"center"}}> 
             {/* if component given as form then only submitJob is executing */}
-            <Link to="/admin/ViewPostedJobs"><Typography variant='h7' sx={{ml:1,mt:4,color:"white"}}>&lt;&lt;GoBack</Typography></Link>
+            {/* <Link to="/admin/ViewPostedJobs"><Typography variant='h7' sx={{ml:1,mt:4,color:"white"}}>&lt;&lt;GoBack</Typography></Link> */}
             <Typography variant='h4' sx={{mt:4,color:"white"}}>EditJob</Typography>
                               <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                                   <WorkIcon/>

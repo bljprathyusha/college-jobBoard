@@ -31,7 +31,7 @@ class PostJob extends Component{
         // const {jobid,jobrole,company,description,salary,enddate}=this.state;
        axios.post("http://localhost:8000/api/jobs",this.state)  
         .then((res)=>{
-            // alert("Posted successfully")
+            alert("Posted Job successfully")
             console.log(res);
         })
         .catch((err)=>{

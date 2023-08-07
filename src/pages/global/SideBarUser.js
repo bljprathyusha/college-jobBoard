@@ -79,15 +79,7 @@ const SidebarUser = () => {
                             }}
 
                         >
-                           
-                               {/* userInfo && userInfo.role === 1 ? */}
-                                    {/* <>
-                                        <MenuItem component={<Link to="/admin/PlacementsDashboard" />} icon={<DashboardIcon />}> Dashboard </MenuItem>
-                                        <MenuItem component={<Link to="/admin/ViewStudents" />} icon={<GroupAddIcon />}> View Students </MenuItem>
-                                        <MenuItem component={<Link to="/admin/ViewPostedJobs" />} icon={<WorkIcon />}> View Posted Jobs </MenuItem>
-                                        <MenuItem component={<Link to="/admin/PostJob" />} icon={<CategoryIcon />}> Post Job </MenuItem>
-                                     </> */}
-                                    {/* : */}
+
                                     <>
                                          <MenuItem component={<Link to="/user/ViewProfile" />} icon={<Person3Icon />}> View Profile </MenuItem>
                                          <MenuItem component={<Link to="/user/AppliedJobs" />} icon={<WorkHistoryIcon />}>Jobs for You </MenuItem>

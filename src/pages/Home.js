@@ -27,7 +27,7 @@ function Home() {
 </Box>
 
     <Box sx={{ width: "100%",height:"10vh"}}>
-    <Button type="submit" variant="contained" display="flex" justifyContent="center" alignItems="center" sx={{m:3,mx:80}}onClick={handleLogin}>Get started</Button>
+    <Button type="submit" variant="contained" display="flex" justifyContent="center" alignItems="center" sx={{m:3,mx:80}} onClick={handleLogin}>Get started</Button>
     {showLogin &&<Login/>}
     </Box>
     </>

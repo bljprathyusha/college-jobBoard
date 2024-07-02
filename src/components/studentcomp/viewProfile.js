@@ -15,7 +15,7 @@ const ViewProfile=()=>{
             setUserData(uD);     
         }
        
-    },[userData])
+    },[])
     useEffect(()=>{
         axios.get(`http://localhost:8000/api/appliedjobscount/${userData.rollnumber}`)
       .then((res) => {
@@ -25,7 +25,7 @@ const ViewProfile=()=>{
       .catch((err) => {
         console.log(err);
       });
-    })
+    },[userData])
 
     return(
         <>

@@ -1,11 +1,13 @@
 
-import { Select, Typography,MenuItem } from '@mui/material';
+import { Select, Typography,MenuItem, Modal } from '@mui/material';
 import {Box,Button,TextField} from '@mui/material';
 import WorkIcon from '@mui/icons-material/Work';
 import Avatar from '@mui/material/Avatar';
 import { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import CloseIcon from '@mui/icons-material/Close';
 class EditJob extends Component{
     //const[jobdetails,setJobDetails]=useState()
     constructor(props)
@@ -19,7 +21,7 @@ class EditJob extends Component{
                  description:'',
                  salary:'',
                  enddate:'',       
-            
+                 showEdit:false
            
             }
         
@@ -37,7 +39,8 @@ class EditJob extends Component{
         axios.put(`http://localhost:8000/api/jobupdate/${jobid}`,this.state)   //api/jobupdate/:jobid
             .then((res)=>{
                 console.log(res)
-                alert('Edited Job')//gives an alert if sccessful
+                toast.success('Edited Job')//gives an alert if sccessful
+                this.props.closeModal()
             })
             .catch((err)=>{
                 console.log(err)
@@ -55,10 +58,24 @@ class EditJob extends Component{
         const {jobid,jobrole,company,description,salary,enddate}=this.state;
         return (
           <>
-          
-          <Box onSubmit={this.submitJob} component="form" className='form_style border-style'sx={{align:"center",m:'2',display:"flex",flexDirection:"column",alignItems:"center"}}> 
+          <Modal open = {this.props.showEdit}>
+          <Box onSubmit={this.submitJob} component="form" className='form_style border-style'sx={{position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: "#002952",
+        boxShadow: 24,
+        p: 4,
+        minWidth: 300,
+        maxWidth: '80%',
+        maxHeight: '80%',
+        overflowY: 'scroll',
+        scrollbarWidth:"none",
+        borderRadius:4,
+        align:"center",m:'2',display:"flex",flexDirection:"column",alignItems:"center"}}> 
             {/* if component given as form then only submitJob is executing */}
             {/* <Link to="/admin/ViewPostedJobs"><Typography variant='h7' sx={{ml:1,mt:4,color:"white"}}>&lt;&lt;GoBack</Typography></Link> */}
+            <CloseIcon sx={{position: 'absolute',left:'80%', fontSize:'small', color:"white"}} onClick={()=>this.props.closeModal()}/>
             <Typography variant='h4' sx={{mt:4,color:"white"}}>EditJob</Typography>
                               <Avatar sx={{ m: 1, bgcolor: "primary.main", mb: 3 }}>
                                   <WorkIcon/>
@@ -75,7 +92,7 @@ class EditJob extends Component{
                       
                       
           </Box>
-      
+          </Modal>
           </>
         )
     }

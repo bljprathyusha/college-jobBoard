@@ -6,6 +6,7 @@ import LockClockOutlined from '@mui/icons-material/LockClockOutlined'
 import TextField from '@mui/material/TextField';
 import { useHistory}  from 'react-router-dom';
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const Login=()=>{
    const navigate=useNavigate();
@@ -23,7 +24,7 @@ const Login=()=>{
                 if(pwd=='cvr')
                      navigate('/admin/ViewPostedJobs',{replace:true})
                 else
-                    alert('invalid credentials')
+                    toast.error('invalid credentials')
            }
            else
            {
@@ -38,7 +39,7 @@ const Login=()=>{
                 })
                 .catch((err)=>{
                     console.log(err);
-                    alert("invalid credentials");
+                    toast.error("invalid credentials");
                 })
 
            }
@@ -59,7 +60,7 @@ const Login=()=>{
             // setPwd("")
         }
         else
-         alert("not filled details");
+         toast.error("Username/Password can't be empty");
        
     }
     return(

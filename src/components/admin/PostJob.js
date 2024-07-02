@@ -5,6 +5,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import Avatar from '@mui/material/Avatar';
 import { Component } from 'react';
 import axios from 'axios';
+import {toast} from 'react-toastify'
 
 class PostJob extends Component{
     //const[jobdetails,setJobDetails]=useState()
@@ -31,7 +32,7 @@ class PostJob extends Component{
         // const {jobid,jobrole,company,description,salary,enddate}=this.state;
        axios.post("http://localhost:8000/api/jobs",this.state)  
         .then((res)=>{
-            alert("Posted Job successfully")
+            toast.success("Posted Job successfully")
             console.log(res);
         })
         .catch((err)=>{

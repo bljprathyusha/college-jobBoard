@@ -5,6 +5,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import Avatar from '@mui/material/Avatar';
 import { useState } from 'react';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 class CreateStudent extends Component {
   constructor()
   {
@@ -30,7 +31,7 @@ class CreateStudent extends Component {
       event.preventDefault();
       axios.post("http://localhost:8000/api/students",this.state)
         .then((res)=>{
-             alert("Added student successfully")
+             toast.success("Added student successfully")
             console.log(res);
         })
         .catch((err)=>{

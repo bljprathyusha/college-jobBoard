@@ -1,29 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { Typography } from "@mui/material";
+import { Popover, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import axios from 'axios';
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AppliedJobs = () => {
   const [jobs, setJobs] = useState([]);
-  const [rollnum, setRollNum] = useState('');  
+  const [rollnum, setRollNum] = useState('');
+  const [jobDescPop,setJobDescPop] = useState({jobid:"",anchorEl:null})
   useEffect(() => {
-      let data = localStorage.getItem("userData");
-      console.log(data);
-      if(data){
-          const userData=JSON.parse(data);
-          console.log(userData);
-          setRollNum(userData.rollnumber);     
-      }
-     
+    let data = localStorage.getItem("userData");
+    console.log(data);
+    if (data) {
+      const userData = JSON.parse(data);
+      console.log(userData);
+      setRollNum(userData.rollnumber);
+    }
+
   }, [rollnum]);
-  useEffect(()=>{
+  useEffect(() => {
     fetchJobs();
     //console.log(rollnum);
-  })
+  },[])
 
   const fetchJobs = () => {
-    axios.get('http://localhost:8000/api/displayjobs/jobs')
+    axios.get(`http://localhost:8000/api/displayjobs/jobs`)
       .then((res) => {
         const jobs = res.data.map((job) => ({
           ...job,
@@ -39,7 +41,7 @@ const AppliedJobs = () => {
     axios.post(`http://localhost:8000/api/jobs/${id}`, { rollnumber: '' + rollnum }) ///added job id to my applied jobs array
       .then((res) => {
         console.log(res);
-        alert("Job Applied");
+        toast.success("Job Applied");
       })
       .catch((err) => {
         console.log(err);
@@ -56,33 +58,47 @@ const AppliedJobs = () => {
 
   return (
     <>
-      <Typography variant="h4" sx={{ color: "white",mt:4, mb: 6 }}>Jobs for you</Typography>
+      <Typography variant="h4" sx={{ color: "white", mt: 4, mb: 6 }}>Jobs for you</Typography>
       <Typography sx={{ color: "white" }} >
         <table cellSpacing={10}>
           <thead>
             <tr>
-              <th style={{color:"#b3e5fc"}}>Job Id</th>
-               <th style={{color:"#b3e5fc"}}>Job Role</th>
-               <th style={{color:"#b3e5fc"}}>Company</th>
-               <th style={{color:"#b3e5fc"}}>Job Description</th>
-               <th style={{color:"#b3e5fc"}}>Salary</th>
-               <th style={{color:"#b3e5fc"}}>End Date</th>
-              <th style={{color:"#b3e5fc"}} colspan="2">Actions</th>
+              <th style={{ color: "#b3e5fc" }}>Job Id</th>
+              <th style={{ color: "#b3e5fc" }}>Job Role</th>
+              <th style={{ color: "#b3e5fc" }}>Company</th>
+              <th style={{ color: "#b3e5fc" }}>Job Description</th>
+              <th style={{ color: "#b3e5fc" }}>Salary</th>
+              <th style={{ color: "#b3e5fc" }}>End Date</th>
+              <th style={{ color: "#b3e5fc" }} colspan="2">Actions</th>
             </tr>
           </thead>
           <tbody>
             {jobs.map((j, i) => (
               <tr key={j.jobid}>
-                <td style={{textAlign:'center',maxWidth:'100px'}}>{j.jobid}</td>
-                              <td style={{textAlign:'center',maxWidth:'200px'}}>{j.jobrole}</td>
-                              <td style={{textAlign:'center',padding:'10px'}}>{j.company}</td>
-                              <td style={{textAlign:'left',maxWidth:'400px'}}>{j.description}</td>
-                              <td style={{textAlign:'center',padding:'10px'}}>{j.salary}</td>
-                              <td style={{textAlign:'center',paddingLeft:'30px',paddingRight:'40px'}}>{j.enddate}</td>
-                              <td style={{textAlign:'center',padding:'10px'}}> <Button variant="contained" sx={{ p: "1" }} onClick={() => handleApply(j.jobid)} >
-                    Apply
-                  </Button></td>
-               
+                <td style={{ textAlign: 'center', maxWidth: '100px' }}>{j.jobid}</td>
+                <td style={{ textAlign: 'center', maxWidth: '200px' }}>{j.jobrole}</td>
+                <td style={{ textAlign: 'center', padding: '10px' }}>{j.company}</td>
+                <td style={{ textAlign: 'center', maxWidth: '400px' }}><Button variant="text" sx={{ textTransform: "inherit", color: "white" }} onClick={(event) => setJobDescPop({ jobid: j.jobid, anchorEl: event.currentTarget })}>
+                  {String(j.description).length > 25 ? String(j.description).substring(0, 25) + "..." : j.description}
+                </Button>
+                  <Popover
+                    id={j.jobid}
+                    open={j.jobid === jobDescPop.jobid}
+                    anchorEl={jobDescPop.anchorEl}
+                    onClose={() => setJobDescPop({ anchorEl: null, jobid: '' })}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                    <Typography sx={{ p: 2 }}>{j.description}</Typography>
+                  </Popover></td>
+                <td style={{ textAlign: 'center', padding: '10px' }}>{j.salary}</td>
+                <td style={{ textAlign: 'center', paddingLeft: '30px', paddingRight: '40px' }}>{j.enddate}</td>
+                <td style={{ textAlign: 'center', padding: '10px' }}> <Button variant="contained" sx={{ p: "1" }} onClick={() => handleApply(j.jobid)} >
+                  Apply
+                </Button></td>
+
               </tr>
             ))}
           </tbody>

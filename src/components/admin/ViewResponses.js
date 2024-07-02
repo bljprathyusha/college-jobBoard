@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import { useState } from 'react';
-import { Typography } from '@mui/material';
+import { Box, Modal, Typography } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function ViewResponses(props) {
   const [jobid, setJobId] = useState();
@@ -39,21 +40,37 @@ export default function ViewResponses(props) {
   }
 
   return (
-    <Typography sx={{ mb:80, color: '#b2dfdb' }}>
-      <Typography variant='h5' sx={{ mt:2,mb:1, color: '#b2dfdb' }}>View Response for jobid:{jobid}</Typography>
-      <Typography sx={{ mt: 4, mb:4,color: '#b2dfdb' }}>No.of students responded:    {resCnt}</Typography>
-    <table style={{fontSize:'20px'}}>
-        <tbody>
-            <th style={{color:'#b2dfdb'}}>Roll Numbers</th>
-        {
-            studResp.map((st)=>(
+    <Modal open={props.showResp}>
+      <Box sx={{position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        backgroundColor: "#002952",
+        boxShadow: 24,
+        p: 4,
+        minWidth: 300,
+        maxWidth: '80%',
+        maxHeight: '80%',
+        overflowY: 'scroll',
+        scrollbarWidth:"none",
+        borderRadius:4,
+        align:"center",m:'2',display:"flex",flexDirection:"column",alignItems:"center"}}>
+        <CloseIcon sx={{position: 'absolute',left:'80%', fontSize:'small', color:"white"}} onClick={()=>props.closeModal()}/>
+        <Typography variant='h5' sx={{ mt: 2, mb: 1, color: '#b2dfdb' }}>JobId : {jobid}</Typography>
+        <Typography sx={{ mt: 4, mb: 4, color: '#b2dfdb' }}>No.of students responded: {resCnt}</Typography>
+        <table style={{ fontSize: '20px' }}>
+          {!!resCnt && <tbody>
+            <th style={{ color: '#b2dfdb' }}>Roll Numbers</th>
+            {
+              studResp.map((st) => (
                 <tr key={st}>
-                    <td style={{padding:'10px'}}>{st}</td>
+                  <td style={{ padding: '10px' }}>{st}</td>
                 </tr>
-            ))
-        }
-        </tbody>
-      </table>
-    </Typography>
+              ))
+            }
+          </tbody>}
+        </table>
+      </Box>
+    </Modal>
   );
 }

@@ -7,6 +7,8 @@ import axios from 'axios';
 import { ThermostatOutlined } from '@mui/icons-material';
 import EditStudent from './EditStudent';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import UploadStudents from './UploadStudents';
 class ViewStudents extends Component {
   constructor()
   {
@@ -41,6 +43,7 @@ class ViewStudents extends Component {
       axios.delete(`http://localhost:8000/api/studentdelete/${sroll}`) 
       .then((res)=>{
         this.fetchStudents()
+        toast.success("Student deleted successfully")
       })
       .catch((err)=>{
         console.log(err)
@@ -64,6 +67,7 @@ class ViewStudents extends Component {
         <Box sx={{color:"white"}}>
          <Typography variant='h5' sx={{color:"white",textAlign:'center'}}>View Students</Typography>
         <Button variant="contained" sx={{mb:3}}> <Link to="/admin/CreateStudent" style={{ textDecoration: 'none', color: 'white' }}>+Add Student</Link></Button>
+        <UploadStudents fetchStudents={this.fetchStudents}/>
        { this.state.showEditStud&& <EditStudent showEdit={this.state.showEditStud} stud={this.state.edistud}/>}
             <table cellSpacing={10} >
                 <thead>

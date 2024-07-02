@@ -18,6 +18,8 @@ import { useState } from 'react';
 import LayoutAdmin from './pages/global/LayoutAdmin';
 import LayoutUser from './pages/global/LayoutUser';
 import CreateStudent from './components/admin/CreateStudent';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   
@@ -47,6 +49,7 @@ const ViewProfileLayout=LayoutUser(ViewProfile)
         <Route path="/admin/EditJob" exact element={<EditJobLayout/>} />
         {/* <Route path="/" element={<App/>}></Route> */}
       </Routes>
+      <ToastContainer/>
     </BrowserRouter>
     </>
   );

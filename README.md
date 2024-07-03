@@ -9,4 +9,5 @@
 Login , Register Students (individual or in bulk) , Edit/Delete Students , Post Job, Edit/Delete Job , View Responses for a particular job.
 ### Student :
 Login, View Profile, Apply for job, View Applied jobs count
-[![CollegeJobBoard]](https://1drv.ms/v/s!Ajgp7JScBMswo6A7ckFRSGrL9CPtqg)
+### Demo Link
+[![CollegeJobBoardDemo]](https://1drv.ms/v/s!Ajgp7JScBMswo6A7ckFRSGrL9CPtqg)

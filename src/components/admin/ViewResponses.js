@@ -64,7 +64,7 @@ export default function ViewResponses(props) {
             {
               studResp.map((st) => (
                 <tr key={st}>
-                  <td style={{ padding: '10px' }}>{st}</td>
+                  <td style={{ padding: '10px',color:"white" }}>{st}</td>
                 </tr>
               ))
             }

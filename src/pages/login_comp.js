@@ -9,7 +9,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Login=()=>{
-   const navigate=useNavigate();
+   const navigate = useNavigate();
     const [uname,setUName]=useState("")
     const[pwd,setPwd]=useState("")
 //    const[isUserLoggedIn,setIsUserLoggedIn]=useState(false);
@@ -43,21 +43,6 @@ const Login=()=>{
                 })
 
            }
-            
-            // if(isUserLoggedIn)
-            // {
-                
-            //         const data = uname;
-            //         localStorage.setItem("userData", data);
-            //         navigate('/user/AppliedJobs');
-            // }
-            // if(isAdminLoggedIn)
-            // {
-            //     navigate('/admin/ViewPostedJobs',{replace:true})
-            // }
-           
-            // setUName("");
-            // setPwd("")
         }
         else
          toast.error("Username/Password can't be empty");

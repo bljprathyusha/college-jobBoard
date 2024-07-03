@@ -48,7 +48,7 @@ class ViewPostedJobs extends Component {
     axios.delete(`http://localhost:8000/api/jobdelete/${jid}`)   ///api/jobdelete/:jobid
       .then((res) => {
         this.fetchJobs();
-        toast.success("Student deleted successfully")
+        toast.success("Job deleted successfully")
       })
       .catch((err) => {
         console.log(err);
@@ -86,12 +86,14 @@ class ViewPostedJobs extends Component {
         this.setState(state => ({
           showEditJob: !state.showEditJob
         }))
+        this.fetchJobs();
         break;
       }
       case "viewresp": {
         this.setState(state => ({
           showResp: !state.showResp
         }))
+        this.fetchJobs();
         break;
       }
     }

@@ -17,7 +17,8 @@ class ViewStudents extends Component {
     this.state={
       students:[],
       showEditStud:false,
-      edistud:{}
+      edistud:{},
+      showUploadStudents:false
       //editroll:0
     }
   }
@@ -61,13 +62,23 @@ class ViewStudents extends Component {
       //()=>(console.log(this.state.editstud))
     }
 
+    closeModal = (modal)=>{
+      switch(modal){
+        case "bulkstudents":{
+            this.setState({showUploadStudents:!this.state.showUploadStudents})
+            break;
+        }
+      }
+    }
+
     render()
     {
       return (
         <Box sx={{color:"white"}}>
          <Typography variant='h5' sx={{color:"white",textAlign:'center'}}>View Students</Typography>
-        <Button variant="contained" sx={{mb:3}}> <Link to="/admin/CreateStudent" style={{ textDecoration: 'none', color: 'white' }}>+Add Student</Link></Button>
-        <UploadStudents fetchStudents={this.fetchStudents}/>
+        <Button variant="contained" sx={{mb:3}}> <Link to="/admin/CreateStudent" style={{ textDecoration: 'none', color: 'white' }}>+Add Student</Link></Button>  
+        <Button variant="contained" sx={{mb:3,textDecoration: 'none', color: 'white', ml:10}} onClick={()=>this.setState({showUploadStudents:true})}> +Add Bulk Students</Button>
+        <UploadStudents showUploadStudents={this.state.showUploadStudents} fetchStudents={()=>this.fetchStudents()} closeModal={()=>this.closeModal("bulkstudents")} />
        { this.state.showEditStud&& <EditStudent showEdit={this.state.showEditStud} stud={this.state.edistud}/>}
             <table cellSpacing={10} >
                 <thead>

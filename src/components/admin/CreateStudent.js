@@ -35,6 +35,7 @@ class CreateStudent extends Component {
             console.log(res);
         })
         .catch((err)=>{
+          toast.error("Student already exists")
             console.log(err)
         })
     }
@@ -51,7 +52,7 @@ class CreateStudent extends Component {
 
                         <TextField  sx={{width:350,mb:3,  "& input": {color: 'white'}}} name="rollnumber" placeholder="Roll Number" value={rollnumber} onChange={this.handleChange} />
                         <TextField sx={{width:350,mb:3,"& input": {color: 'white'}}} name="username" placeholder="UserName" value={username} onChange={this.handleChange}/>
-                        <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="password" placeholder="Password" value={password} onChange={this.handleChange} />
+                        <TextField type="password" sx={{width:350,mb:3,"& input": {color: 'white'}}} name="password" placeholder="Password" value={password} onChange={this.handleChange} />
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}}  name="branch" placeholder="Branch" value={branch} onChange={this.handleChange} />
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="stream" placeholder="Stream" value={stream} onChange={this.handleChange} />
                         <TextField  sx={{width:350,mb:3,"& input": {color: 'white'}}} name="cgpa" placeholder="CGPA" value={cgpa} onChange={this.handleChange} />
